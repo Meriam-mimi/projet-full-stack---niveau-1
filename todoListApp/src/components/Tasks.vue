@@ -28,7 +28,7 @@ fetch('http://localhost:3000/tasks')
     <h1 class="titre">Liste des tâches</h1>
     <ul>
         <li v-for="task in tasks" :key="task._id">
-        <h3>{{ task.name }}</h3>
+        <h3>{{ task.name }} :</h3>
         <p>{{ task.description }}</p>
       </li>
     </ul>

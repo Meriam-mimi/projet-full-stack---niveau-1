@@ -15,7 +15,10 @@ import Menu from './components/Menu.vue';
       <nav class="mx-auto ">
         <RouterLink to="/" class="rounded-full" > Accueil</RouterLink>
       <RouterLink to="/ajouter-task" class="rounded-full">
-          <button>Ajouter une tâche</button>
+         Ajouter une tâche
+      </RouterLink >
+      <RouterLink to="/connexion" class="rounded-full">
+         Connexion
       </RouterLink >
 
       </nav>

@@ -1,5 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const app = express()
 const port = 3000
 
@@ -13,10 +15,10 @@ var MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb://localhost:27017";
 
 
-
+const JWT_SECRET = 'secret'; 
 const dbName = "TodoList";
 const collectionName = "tasks";
-
+let usersCollection;
 const db = global.db;
 
 //const { connectToMongo} =  require ('./connexion.js')
@@ -43,6 +45,8 @@ async function connectToMongo(dbName, collectionName) {
   const client = new MongoClient(uri);
   try {
     await client.connect();
+    usersCollection = client.db(dbName).collection('users');
+
     client.db(dbName).collection(collectionName);
     global.db = client.db;
     //console.log("Connecté à MongoDB");
@@ -54,6 +58,25 @@ async function connectToMongo(dbName, collectionName) {
     throw error;
   }
 }
+
+// Route de connexion
+app.post('/login', async (req, res) => {
+  const { username, password } = req.body;
+
+  const user = await usersCollection.findOne({ username });
+  if (!user) {
+    return res.status(400).json({ message: 'Utilisateur non trouvé' });
+  }
+
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+  if (!isPasswordValid) {
+    return res.status(400).json({ message: 'Mot de passe incorrect' });
+  }
+
+  const token = jwt.sign({ username: user.username }, JWT_SECRET, { expiresIn: '1h' });
+  res.json({ token });
+});
+
 
 // récuperer tous les tâches
 app.get('/tasks', async (request, response) => {

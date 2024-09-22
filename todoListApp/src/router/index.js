@@ -1,8 +1,9 @@
 // src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router'; 
 import Tasks from '../components/Tasks.vue';
-import addTask from '../pages/addTask.vue';
+import Login from '../components/Login.vue';
 import TaskForm from '../components/TaskForm.vue';
+import dashboard from '../pages/dashboard.vue'
 
 const routes = [
   {
@@ -17,6 +18,15 @@ const routes = [
     path: '/add',
     component: Tasks,
   },
+  {
+    path: '/connexion',
+    component: Login,
+  },
+  {
+    path: '/dashboard',
+    component: dashboard,
+  },
+  
 ];
 
 const router = createRouter({

@@ -58,6 +58,14 @@
   </script>
   
   <style scoped>
+
+input {
+  margin-bottom: 10px;
+  padding: 8px;
+  width: 100%;
+  border: 1px solid grey;
+  border-radius: 10px;
+}
   .login-container {
     max-width: 300px;
     margin: 0 auto;
